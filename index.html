@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Expressões Faciais</title>
+    <style>
+        body {
+            background-color: #e6affa; /* Cor de fundo para a página */
+            margin: 0; /* Remove as margens padrão */
+            padding: 0; /* Remove o padding padrão */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color:rgb(31, 22, 155);
+        }
+        h1 {
+            display: inline-block; /* Ajusta a largura ao conteúdo */
+            border: 2px solid #000; /* Define a borda */
+            padding: 10px; /* Espaço entre o texto e a borda */
+            border-radius: 8px; /* Deixa as bordas arredondadas (opcional) */
+        }
+         #game-container {
+            background-color: #e6affa;
+            margin: 50px auto;
+            width: 300px;
+
+        }
+        .emotion-image {
+            width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+         }
+        .emotion-button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .emotion-button:hover{
+            background-color: #cbcff8;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            position: fixed;       
+            bottom: left 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f1f1f1;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+         }
+    
+         .nav-button {      
+            padding: 10px 20px;
+            font-size: 16px;  
+            cursor: pointer;
+            background-color: #095db6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    
+         .nav-button:hover {      
+            background-color: #2085f1;
+       }
+    
+    </style>
+</head>
+<body>
+    <h1>Expressões - Emoções</h1>
+    <div id="game-container">
+        <img id="emotionImage" class="emotion-image" src="emocoes/feliz.png" alt="Expressão Facial">
+        <div id="message"></div>
+        <div>
+            <button class="emotion-button" onclick="checkAnswer('feliz')"><strong>Feliz</strong></button>
+            <button class="emotion-button" onclick="checkAnswer('triste')"><strong>Triste</strong></button>
+            <button class="emotion-button" onclick="checkAnswer('raiva')"><strong>Raiva</strong></button>
+            <button class="emotion-button" onclick="checkAnswer('surpreso')"><strong>Surpreso</strong></button>
+        </div>
+        <button id="nextButton" class="emotion-button hidden" onclick="nextQuestion()"><strong>Próxima</strong></button>
+    </div>
+    <footer></footer>
+        <button class="nav-button" onclick="returnToPrevious()">Retornar</button>
+        <button class="nav-button" onclick="goToIntermediateLevel()">Avançar</button>
+    </footer>
+    <script>
+        const emotions = [
+            { image: 'emocoes/feliz.png', answer: 'feliz' },
+            { image: 'emocoes/triste.png', answer: 'triste' },
+            { image: 'emocoes/raiva.png', answer: 'raiva' },
+            { image: 'emocoes/surpreso.png', answer: 'surpreso' }
+        ];
+
+        let currentEmotionIndex = 0;
+
+        function checkAnswer(answer) {
+            const correctAnswer = emotions[currentEmotionIndex].answer;
+            const messageDiv = document.getElementById('message');
+
+            if (answer === correctAnswer) {
+                messageDiv.innerHTML = "<h2 style='color:green;'>Correto!</h2>";
+            } else {
+                messageDiv.innerHTML = "<h2 style='color:red;'>Errado! <br>A resposta correta é " + correctAnswer + ".</h2>";
+            }
+
+            document.getElementById('nextButton').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentEmotionIndex = (currentEmotionIndex + 1) % emotions.length;
+            document.getElementById('emotionImage').src = emotions[currentEmotionIndex].image;
+            document.getElementById('message').innerHTML = "";
+            document.getElementById('nextButton').classList.add('hidden');
+        }
+    </script>
+
+</body>
+</html>
